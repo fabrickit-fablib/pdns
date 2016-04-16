@@ -1,0 +1,43 @@
+node_map:
+  pdns:
+    hosts:
+      - 192.168.122.50
+      - 192.168.122.51
+    fabruns:
+      - pdns/mysql
+      - pdns/pdns
+
+pdns:
+  mysql:
+    host: localhost
+    port: 3306
+    user: pdns
+    pass: pdnspass
+    dbname: pdns
+
+mysql:
+  cluster_map:
+    pdns1:
+      hosts:
+        - ${#node_map.pdns.hosts.0}
+      port: 3306
+      dbs: [pdns]
+      user_map:
+        pdns:
+          user: pdns
+          password: pdnspass
+          src_hosts:
+            - 'localhost'
+          previleges: 'ALL PREVILEGES'
+    pdns2:
+      hosts:
+        - ${#node_map.pdns.hosts.1}
+      port: 3306
+      dbs: [pdns]
+      user_map:
+        pdns:
+          user: pdns
+          password: pdnspass
+          src_hosts:
+            - 'localhost'
+          previleges: 'ALL PREVILEGES'

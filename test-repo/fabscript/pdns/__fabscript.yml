@@ -1,0 +1,7 @@
+mysql:
+  status_flow: [1]
+
+pdns:
+  require:
+    pdns/mysql: 1
+  status_flow: [1]
